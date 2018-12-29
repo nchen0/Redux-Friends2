@@ -40,3 +40,13 @@ export const deleteFriend = id => {
     });
   };
 };
+
+export const changeName = (edited, id) => {
+  return dispatch => {
+    console.log("edited is: ", edited);
+    console.log("action id is: ", id);
+    return axios.put(`http://localhost:5000/api/friends/${id}`, edited).then(({ data }) => {
+      dispatch({ type: FETCH_FRIENDS_SUCCESS, payload: data });
+    });
+  };
+};
