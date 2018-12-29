@@ -32,3 +32,11 @@ export const addFriends = friend => {
       });
   };
 };
+
+export const deleteFriend = id => {
+  return dispatch => {
+    return axios.delete(`http://localhost:5000/api/friends/${id}`).then(({ data }) => {
+      dispatch({ type: FETCH_FRIENDS_SUCCESS, payload: data });
+    });
+  };
+};

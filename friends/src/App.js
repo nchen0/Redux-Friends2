@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import { connect } from "react-redux";
-import { fetchFriends, addFriends } from "./actions";
+import { fetchFriends, addFriends, deleteFriend } from "./actions";
 
 class App extends Component {
   constructor() {
@@ -9,7 +9,8 @@ class App extends Component {
     this.state = {
       name: "",
       age: "",
-      email: ""
+      email: "",
+      editing: false
     };
   }
   componentDidMount() {
@@ -28,15 +29,36 @@ class App extends Component {
     this.setState({ name: "", age: "", email: "" });
     this.props.addFriends(newFriend);
   };
+  toggleEdit = e => {
+    e.preventDefault();
+    this.setState({ editing: true });
+  };
   render() {
     const { friend } = this.props;
     console.log(friend);
     return (
       <div className="App">
         <h1>Friends</h1>
-        {friend.friends.map(person => {
-          return <div key={person.id}>{person.name}</div>;
-        })}
+        {friend.fetching ? (
+          <p>Fetching...</p>
+        ) : (
+          <div>
+            {friend.friends.map(person => {
+              return (
+                <div key={person.id} onClick={this.toggleEdit}>
+                  <div>{person.name}</div>
+                  {this.state.editing ? (
+                    <form>
+                      <button>Edit</button>
+                      <button onClick={() => this.props.deleteFriend(person.id)}>Delete</button>
+                    </form>
+                  ) : null}
+                </div>
+              );
+            })}
+          </div>
+        )}
+
         <form>
           <input
             value={this.state.name}
@@ -66,5 +88,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchFriends, addFriends }
+  { fetchFriends, addFriends, deleteFriend }
 )(App);
