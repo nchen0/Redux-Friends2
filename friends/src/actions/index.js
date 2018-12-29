@@ -9,10 +9,10 @@ export const fetchFriends = () => {
     return axios
       .get("http://localhost:5000/api/friends")
       .then(({ data }) => {
-        dispatch({ type: FETCH_FRIENDS_SUCCESS, data });
+        dispatch({ type: FETCH_FRIENDS_SUCCESS, payload: data });
       })
       .catch(err => {
-        dispatch({ type: FETCH_FRIENDS_ERROR, err });
+        dispatch({ type: FETCH_FRIENDS_ERROR, payload: err });
       });
   };
 };
