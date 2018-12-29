@@ -38,7 +38,6 @@ class App extends Component {
     this.setState({ editFriend: true });
   };
   changeName = (id, person) => {
-    console.log("id is: ", person);
     const editedFriend = {
       name: this.state.name,
       age: this.props.friend.friends[id].age,
